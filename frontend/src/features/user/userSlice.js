@@ -35,7 +35,6 @@ export const registerUser = createAsyncThunk(
       return response.data.data;
     } catch (error) {
       // 실패
-      console.log(error);
       // 1. 실패 토스트 메세지를 보여준다.
       dispatch(
         showToastMessage({
