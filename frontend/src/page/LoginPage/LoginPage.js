@@ -7,6 +7,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import "./style/login.style.css";
 import { loginWithEmail, loginWithGoogle } from "../../features/user/userSlice";
 import { clearErrors } from "../../features/user/userSlice";
+import api from "../../utils/api";
 const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
 const Login = () => {
@@ -21,9 +22,20 @@ const Login = () => {
       dispatch(clearErrors());
     }
   }, [navigate]);
-  const handleLoginWithEmail = (event) => {
+
+  const handleLoginWithEmail = async (event) => {
     event.preventDefault();
-    dispatch(loginWithEmail({ email, password }));
+    try {
+      await dispatch(loginWithEmail({ email, password }));
+      const response = await api.post("/auth/login", { email, password });
+      if (response.status === 200) {
+        sessionStorage.setItem("token", response.data.token);
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleGoogleLogin = async (googleData) => {

@@ -11,6 +11,7 @@ authController.loginWithEmail = async (req, res) => {
       if (isMatch) {
         //token
         const token = await user.generateToken();
+
         return res.status(200).json({ status: "success", user, token });
       }
     }
