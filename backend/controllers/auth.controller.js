@@ -1,5 +1,6 @@
 const authController = {};
 const bcrypt = require("bcryptjs");
+const User = require("../Model/User");
 
 authController.loginWithEmail = async (req, res) => {
   try {
