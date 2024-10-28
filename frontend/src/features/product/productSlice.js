@@ -78,12 +78,13 @@ const productSlice = createSlice({
       .addCase(createProduct.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
-        state.success = false; // 상품 생성 성공했다? 다이얼로그를 닫고, 실패? 실패메세지를 다이어로그에 보여주고 닫지 않음.
+        state.success = true; // 상품 생성 성공했다? 다이얼로그를 닫고, 실패? 실패메세지를 다이어로그에 보여주고 닫지 않음.
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-        state.success = true;
+        state.success = false;
+        console.log(state.error);
       })
       .addCase(getProductList.pending, (state, action) => {
         state.loading = true;
