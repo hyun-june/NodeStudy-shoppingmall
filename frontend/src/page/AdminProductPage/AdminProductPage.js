@@ -69,6 +69,7 @@ const AdminProductPage = () => {
 
   const handlePageClick = ({ selected }) => {
     //  쿼리에 페이지값 바꿔주기
+    setSearchQuery({ ...searchQuery, page: selected + 1 });
   };
   // searchbox에서 검색어를 읽어온다 => 엔터를 치면 => searchQuery객체가 업데이트 된다.{name: 스트레이트 팬츠}
   // => searchQuery 객체 안에 아이템 기준으로 url을 새로 생성해서 호출. (&name=스트레이트+팬츠)
