@@ -1,15 +1,20 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ProductCard from "./components/ProductCard";
 import { Row, Col, Container } from "react-bootstrap";
 import { useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductList } from "../../features/product/productSlice";
+import ReactPaginate from "react-paginate";
 
 const LandingPage = () => {
   const dispatch = useDispatch();
 
-  const productList = useSelector((state) => state.product.productList);
+  const { productList, totalPageNum } = useSelector((state) => state.product);
   const [query] = useSearchParams();
+  const [searchQuery, setSearchQuery] = useState({
+    page: query.get("page") || 1,
+    name: query.get("name") || "",
+  }); //검색 조건들을 저장하는 객체
   const name = query.get("name");
   useEffect(() => {
     dispatch(
@@ -18,6 +23,10 @@ const LandingPage = () => {
       })
     );
   }, [query]);
+  const handlePageClick = ({ selected }) => {
+    //  쿼리에 페이지값 바꿔주기
+    setSearchQuery({ ...searchQuery, page: selected + 1 });
+  };
 
   return (
     <Container>
@@ -38,6 +47,27 @@ const LandingPage = () => {
           </div>
         )}
       </Row>
+      <ReactPaginate
+        nextLabel="next >"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={5}
+        pageCount={5}
+        forcePage={searchQuery.page - 1}
+        previousLabel="< previous"
+        renderOnZeroPageCount={null}
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakLabel="..."
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        containerClassName="pagination"
+        activeClassName="active"
+        className="display-center list-style-none"
+      />
     </Container>
   );
 };
