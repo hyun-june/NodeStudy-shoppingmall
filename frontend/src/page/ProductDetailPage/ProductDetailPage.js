@@ -30,7 +30,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     dispatch(getProductDetail(id));
-  }, [id, dispatch]);
+  }, [id]);
 
   if (loading || !selectedProduct)
     return (
