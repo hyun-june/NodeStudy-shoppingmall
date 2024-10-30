@@ -89,7 +89,8 @@ productController.deleteProduct = async (req, res) => {
     const productId = req.params.id;
     const product = await Product.findByIdAndUpdate(
       { _id: productId },
-      { isDeleted: true }
+      { isDeleted: true },
+      { new: true }
     );
     if (!product) throw new Error("No item found");
     res.status(200).json({ status: "success" });
