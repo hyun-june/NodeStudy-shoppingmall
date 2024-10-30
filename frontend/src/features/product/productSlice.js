@@ -23,6 +23,7 @@ export const getProductDetail = createAsyncThunk(
     try {
       const response = await api.get(`/product/${id}`);
       if (response.status !== 200) throw new Error(response.error);
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.error);
     }
@@ -53,8 +54,8 @@ export const deleteProduct = createAsyncThunk(
       const response = await api.delete(`/product/${id}`);
       if (response.status !== 200) throw new Error(response.error);
       dispatch(showToastMessage("상품 삭제 완료", "success"));
-
       dispatch(getProductList({ page: 1 }));
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.error);
     }
@@ -158,6 +159,7 @@ const productSlice = createSlice({
       })
       .addCase(getProductDetail.fulfilled, (state, action) => {
         state.loading = false;
+        state.selectedProduct = action.payload;
         state.error = "";
       })
       .addCase(getProductDetail.rejected, (state, action) => {
