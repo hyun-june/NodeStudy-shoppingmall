@@ -53,8 +53,10 @@ export const deleteProduct = createAsyncThunk(
     try {
       const response = await api.delete(`/product/${id}`);
       if (response.status !== 200) throw new Error(response.error);
-      dispatch(showToastMessage("상품 삭제 완료", "success"));
       dispatch(getProductList({ page: 1 }));
+      dispatch(
+        showToastMessage({ message: "상품 삭제 완료", status: "success" })
+      );
       return id;
     } catch (error) {
       return rejectWithValue(error.error);
