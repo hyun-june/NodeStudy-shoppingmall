@@ -6,7 +6,12 @@ const cors = require("cors");
 const app = express();
 const indexRouter = require("./routes/index");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://nodestudy-shoppingmall.netlify.app", // 허용할 출처
+    methods: ["GET", "POST", "PUT", "DELETE"], // 허용할 HTTP 메서드
+  })
+);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
