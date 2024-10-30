@@ -10,7 +10,9 @@ import { addToCart } from "../../features/cart/cartSlice";
 
 const ProductDetail = () => {
   const dispatch = useDispatch();
-  const { selectedProduct, loading } = useSelector((state) => state.product);
+  const { selectedProduct, loading, error } = useSelector(
+    (state) => state.product
+  );
   const [size, setSize] = useState("");
   const { id } = useParams();
   const [sizeError, setSizeError] = useState(false);

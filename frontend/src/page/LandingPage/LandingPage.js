@@ -17,24 +17,19 @@ const LandingPage = () => {
   }); //검색 조건들을 저장하는 객체
   const name = query.get("name");
   useEffect(() => {
-    dispatch(
-      getProductList({
-        name,
-      })
-    );
-  }, [query]);
+    dispatch(getProductList({ ...searchQuery }));
+  }, [searchQuery]);
   const handlePageClick = ({ selected }) => {
     //  쿼리에 페이지값 바꿔주기
     setSearchQuery({ ...searchQuery, page: selected + 1 });
   };
-
   return (
     <Container>
       <Row>
         {productList.length > 0 ? (
           productList.map((item) => (
             <Col md={3} sm={12} key={item._id}>
-              <ProductCard item={item} />
+              <ProductCard item={item}></ProductCard>
             </Col>
           ))
         ) : (
@@ -51,7 +46,7 @@ const LandingPage = () => {
         nextLabel="next >"
         onPageChange={handlePageClick}
         pageRangeDisplayed={5}
-        pageCount={5}
+        pageCount={totalPageNum}
         forcePage={searchQuery.page - 1}
         previousLabel="< previous"
         renderOnZeroPageCount={null}
