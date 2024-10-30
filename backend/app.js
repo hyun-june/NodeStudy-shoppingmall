@@ -8,7 +8,10 @@ const indexRouter = require("./routes/index");
 
 app.use(
   cors({
-    origin: "https://nodestudy-shoppingmall.netlify.app", // 허용할 출처
+    origin: [
+      "https://nodestudy-shoppingmall.netlify.app",
+      "http://localhost:3000",
+    ], // 허용할 출처
     methods: ["GET", "POST", "PUT", "DELETE"], // 허용할 HTTP 메서드
   })
 );
