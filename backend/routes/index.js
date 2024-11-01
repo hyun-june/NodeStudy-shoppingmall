@@ -11,4 +11,3 @@ router.use("/product", productApi);
 router.use("/cart", cartApi);
 
 module.exports = router;
-s;
