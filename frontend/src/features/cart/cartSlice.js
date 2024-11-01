@@ -24,7 +24,7 @@ export const addToCart = createAsyncThunk(
           status: "success",
         })
       );
-      return response.data; //TODO
+      return response.data.cartItemQty;
     } catch (error) {
       dispatch(
         showToastMessage({ message: "카트에 추가 실패.", status: "error" })
@@ -71,7 +71,7 @@ const cartSlice = createSlice({
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
-        //TODO
+        state.cartItemCount = action.payload;
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
