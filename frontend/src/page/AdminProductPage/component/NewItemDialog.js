@@ -6,6 +6,7 @@ import { CATEGORY, STATUS, SIZE } from "../../../constants/product.constants";
 import "../style/adminProduct.style.css";
 import {
   clearError,
+  clearSuccess,
   createProduct,
   editProduct,
 } from "../../../features/product/productSlice";
@@ -54,6 +55,13 @@ const NewItemDialog = ({ mode, showDialog, setShowDialog }) => {
       }
     }
   }, [showDialog]);
+
+  useEffect(() => {
+    if (success) {
+      setShowDialog(false);
+      dispatch(clearSuccess()); // success 상태 초기화
+    }
+  }, [success, dispatch, setShowDialog]);
 
   const handleClose = () => {
     //모든걸 초기화시키고;

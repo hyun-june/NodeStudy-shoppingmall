@@ -18,9 +18,18 @@ const LandingPage = () => {
     name: query.get("name") || "",
   }); //검색 조건들을 저장하는 객체
   const name = query.get("name");
+
+  useEffect(() => {
+    setSearchQuery({
+      page: query.get("page") || 1,
+      name: query.get("name") || "",
+    });
+  }, [query]);
+
   useEffect(() => {
     dispatch(getProductList({ ...searchQuery }));
   }, [searchQuery]);
+
   const handlePageClick = ({ selected }) => {
     //  쿼리에 페이지값 바꿔주기
     setSearchQuery({ ...searchQuery, page: selected + 1 });
