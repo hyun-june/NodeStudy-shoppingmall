@@ -34,7 +34,7 @@ authController.authenticate = async (req, res, next) => {
     jwt.verify(token, JWT_SECRET_KEY, (error, payload) => {
       console.log("test");
       if (error) {
-        throw new Error("invalid token");
+        throw new Error("로그인을 해주세요.");
       }
       req.userId = payload._id;
     });

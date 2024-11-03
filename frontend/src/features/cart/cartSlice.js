@@ -29,7 +29,7 @@ export const addToCart = createAsyncThunk(
       console.log("eee", error);
       dispatch(
         showToastMessage({
-          message: "이미 담겨져 있는 아이템입니다.",
+          message: `${error}`,
           status: "error",
         })
       );
