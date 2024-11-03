@@ -26,10 +26,9 @@ export const addToCart = createAsyncThunk(
       );
       return response.data.cartItemQty;
     } catch (error) {
-      console.log("eee", error);
       dispatch(
         showToastMessage({
-          message: `${error}`,
+          message: `${error.error}`,
           status: "error",
         })
       );
