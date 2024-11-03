@@ -74,4 +74,28 @@ cartController.getCartQty = async (req, res) => {
   }
 };
 
+cartController.editCartItem = async (req, res) => {
+  try {
+    const { userId } = req;
+    const { id } = req.params;
+
+    const { qty } = req.body;
+    const cart = await Cart.findOne({ userId }).populate({
+      path: "items",
+      populate: {
+        path: "productId",
+        model: "Product",
+      },
+    });
+    if (!cart) throw new Error("There is no cart for this user");
+    const index = cart.items.findIndex((item) => item._id.equals(id));
+    if (index === -1) throw new Error("Can not find item");
+    cart.items[index].qty = qty;
+    await cart.save();
+    res.status(200).json({ status: 200, data: cart.items });
+  } catch (error) {
+    return res.status(400).json({ status: "fail", error: error.message });
+  }
+};
+
 module.exports = cartController;
