@@ -125,6 +125,37 @@ const cartSlice = createSlice({
       .addCase(getCartList.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+      .addCase(getCartQty.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(getCartQty.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.cartItemCount = action.payload;
+      })
+      .addCase(getCartQty.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(deleteCartItem.pending, (state, action) => {
+        state.loading = true;
+      })
+      .addCase(deleteCartItem.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = "";
+        state.cartList = state.cartList.filter(
+          (item) => item.id !== action.payload
+        );
+        state.cartItemCount = action.payload;
+        state.totalPrice = state.cartList.reduce(
+          (total, item) => total + item.productId.price * item.qty,
+          0
+        );
+      })
+      .addCase(deleteCartItem.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });
