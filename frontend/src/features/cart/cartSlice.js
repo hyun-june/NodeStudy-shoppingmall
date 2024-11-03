@@ -102,6 +102,10 @@ const calculateTotalPrice = (cartList) => {
   );
 };
 
+const calculateCartItemCount = (cartList) => {
+  return cartList.reduce((total, item) => total + item.qty, 0);
+};
+
 const cartSlice = createSlice({
   name: "cart",
   initialState,
@@ -119,7 +123,9 @@ const cartSlice = createSlice({
       .addCase(addToCart.fulfilled, (state, action) => {
         state.loading = false;
         state.error = "";
-        state.cartItemCount = action.payload;
+        state.cartList = action.payload;
+        state.cartItemCount = calculateCartItemCount(state.cartList);
+        state.totalPrice = calculateTotalPrice(state.cartList);
       })
       .addCase(addToCart.rejected, (state, action) => {
         state.loading = false;
@@ -132,6 +138,7 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = "";
         state.cartList = action.payload;
+        state.cartItemCount = calculateCartItemCount(state.cartList);
         state.totalPrice = calculateTotalPrice(state.cartList);
       })
       .addCase(getCartList.rejected, (state, action) => {
@@ -159,7 +166,7 @@ const cartSlice = createSlice({
         state.cartList = state.cartList.filter(
           (item) => item.id !== action.payload
         );
-        state.cartItemCount = action.payload;
+        state.cartItemCount = calculateCartItemCount(state.cartList);
         state.totalPrice = calculateTotalPrice(state.cartList);
       })
       .addCase(deleteCartItem.rejected, (state, action) => {
@@ -173,6 +180,7 @@ const cartSlice = createSlice({
         state.loading = false;
         state.error = "";
         state.cartList = action.payload;
+        state.cartItemCount = calculateCartItemCount(state.cartList);
         state.totalPrice = calculateTotalPrice(state.cartList);
       })
       .addCase(updateQty.rejected, (state, action) => {
