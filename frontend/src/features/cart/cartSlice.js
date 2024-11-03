@@ -26,8 +26,12 @@ export const addToCart = createAsyncThunk(
       );
       return response.data.cartItemQty;
     } catch (error) {
+      console.log("eee", error);
       dispatch(
-        showToastMessage({ message: "카트에 추가 실패.", status: "error" })
+        showToastMessage({
+          message: "이미 담겨져 있는 아이템입니다.",
+          status: "error",
+        })
       );
       return rejectWithValue(error.error);
     }
