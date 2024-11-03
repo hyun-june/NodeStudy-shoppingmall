@@ -13,6 +13,7 @@ const CartPage = () => {
 
   useEffect(() => {
     //카트리스트 불러오기
+    dispatch(getCartList());
   }, []);
 
   return (
