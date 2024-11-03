@@ -62,7 +62,7 @@ export const deleteCartItem = createAsyncThunk(
           status: "success",
         })
       );
-      return response.data.cartItemQty;
+      return id;
     } catch (error) {
       return rejectWithValue(error.error);
     }
