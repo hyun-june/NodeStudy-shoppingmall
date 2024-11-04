@@ -104,7 +104,7 @@ const calculateTotalPrice = (cartList) => {
 };
 
 const calculateCartItemCount = (cartList) => {
-  return cartList.reduce((total, item) => total + item.qty, 0);
+  return cartList.length;
 };
 
 const cartSlice = createSlice({
