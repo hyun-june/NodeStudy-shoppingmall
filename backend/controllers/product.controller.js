@@ -154,6 +154,7 @@ productController.checkItemListStock = async (itemList) => {
     // 재고 확인 로직
     await Promise.all(
       itemList.map(async (item) => {
+        console.log("Processing item:", item);
         const stockCheck = await productController.checkStock(item);
         console.log("Stock Check Result:", stockCheck);
         if (!stockCheck.isVerify) {
