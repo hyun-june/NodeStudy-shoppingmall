@@ -136,6 +136,7 @@ productController.checkItemListStock = async (itemList) => {
     await Promise.all(
       itemList.map(async (item) => {
         const stockCheck = await productController.checkStock(item);
+        console.log("Stock Check Result:", stockCheck);
         if (!stockCheck.isVerify) {
           insufficientStockItems.push({ item, message: stockCheck.message });
         }
@@ -145,7 +146,7 @@ productController.checkItemListStock = async (itemList) => {
 
     return insufficientStockItems;
   } catch (error) {
-    
+    return res.status(400).json({ status: "fail", error: error.message });
   }
 };
 
