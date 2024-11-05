@@ -113,6 +113,13 @@ productController.getProductById = async (req, res) => {
 productController.checkStock = async (item) => {
   // 내가 사려는 아이템 재고 정보 들고오기
   const product = await Product.findById(item.productId);
+  // 상품이 존재하지 않을 경우 에러 처리
+  if (!product) {
+    return {
+      isVerify: false,
+      message: "해당 상품이 존재하지 않습니다.",
+    };
+  }
   // 내가 사려는 아이템 qty, 재고 비교
   if (product.stock[item.size] < item.qty) {
     // 재고가 불충분하면 불충분 메세지와 함께 데이터 반환
@@ -127,6 +134,8 @@ productController.checkStock = async (item) => {
   newStock[(item, size)] -= item.qty;
   product.stock = newStock;
   await product.save();
+
+  return { isVerify: true };
 };
 
 productController.checkItemListStock = async (itemList) => {
