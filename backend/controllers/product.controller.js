@@ -155,6 +155,7 @@ productController.checkItemListStock = async (itemList) => {
 
     return insufficientStockItems;
   } catch (error) {
+    console.error("Error in checkItemListStock:", error.message);
     return { status: "fail", error: error.message };
   }
 };
