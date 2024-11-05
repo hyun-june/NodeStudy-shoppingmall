@@ -146,7 +146,7 @@ productController.checkItemListStock = async (itemList) => {
 
     return insufficientStockItems;
   } catch (error) {
-    return res.status(400).json({ status: "fail", error: error.message });
+    return { status: "fail", error: error.message };
   }
 };
 
