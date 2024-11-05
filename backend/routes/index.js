@@ -4,7 +4,7 @@ const userApi = require("./user.api");
 const authApi = require("./auth.api");
 const productApi = require("./product.api");
 const cartApi = require("./cart.api");
-const orderApi = rquire("./order.api.js");
+const orderApi = require("./order.api.js");
 
 router.use("/user", userApi);
 router.use("/auth", authApi);
