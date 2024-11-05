@@ -8,6 +8,12 @@ orderController.createOrder = async (req, res) => {
     //프론트엔드에서 데이터 보낸거 받아와 userId,totalPrice,shipTo,contact,orderList
     const { userId } = req;
     const { totalPrice, shipTo, contact, orderList } = req.body;
+
+    if (!orderList || !Array.isArray(orderList)) {
+      return res
+        .status(400)
+        .json({ status: "fail", error: "주문 목록이 필요합니다." });
+    }
     // 재고 확인 & 재고 업데이트
     const insufficientStockItems = await productController.checkItemListStock(
       orderList

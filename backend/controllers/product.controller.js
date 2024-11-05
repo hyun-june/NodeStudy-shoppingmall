@@ -144,7 +144,9 @@ productController.checkItemListStock = async (itemList) => {
     );
 
     return insufficientStockItems;
-  } catch (error) {}
+  } catch (error) {
+    
+  }
 };
 
 module.exports = productController;
