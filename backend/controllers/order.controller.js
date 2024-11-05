@@ -43,6 +43,7 @@ orderController.createOrder = async (req, res) => {
     await newOrder.save();
     res.status(200).json({ status: "success", orderNum: newOrder.orderNum });
   } catch (error) {
+    console.error("Error in createOrder:", error.message);
     return res.status(400).json({ status: "fail", error: error.message });
   }
 };
