@@ -4,6 +4,9 @@ import { badgeBg } from "../../../constants/order.constants";
 import { currencyFormat } from "../../../utils/number";
 
 const OrderStatusCard = ({ orderItem }) => {
+  if (!orderItem || !orderItem.items || orderItem.items.length === 0) {
+    return <div>주문 정보가 없습니다.</div>; // 없으면 메시지를 보여줌
+  }
   return (
     <div>
       <Row className="status-card">
