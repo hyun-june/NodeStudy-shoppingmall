@@ -56,7 +56,7 @@ export const getOrderList = createAsyncThunk(
         throw new Error(response.error);
       }
       dispatch(
-        showToastMessage({ message: "오더 업데이트 완료!", states: "success" })
+        showToastMessage({ message: "오더 업데이트 완료!", status: "success" })
       );
       return response.data;
     } catch (error) {
