@@ -5,17 +5,18 @@ import { currencyFormat } from "../../../utils/number";
 
 const OrderStatusCard = ({ orderItem }) => {
   if (!orderItem || !orderItem.items || orderItem.items.length === 0) {
-    return <div>주문 정보가 없습니다.</div>; // 없으면 메시지를 보여줌
+    return <div>주문 정보가 없습니다.</div>;
   }
+
+  const productName = orderItem.items[0]?.productId?.name || "상품 이름 없음"; // name이 없을 경우 기본값 설정
+  const productImage = orderItem.items[0]?.productId?.image;
+  const productAlt = productName;
+
   return (
     <div>
       <Row className="status-card">
         <Col xs={2}>
-          <img
-            src={orderItem.items[0]?.productId?.image}
-            alt={orderItem.items[0]?.productId?.image}
-            height={96}
-          />
+          <img src={productImage} alt={productAlt} height={96} />
         </Col>
         <Col xs={8} className="order-info">
           <div>
@@ -25,7 +26,7 @@ const OrderStatusCard = ({ orderItem }) => {
           <div className="text-12">{orderItem.createdAt.slice(0, 10)}</div>
 
           <div>
-            {orderItem.items[0].productId.name}
+            {productName}
             {orderItem.items.length > 1 && `외 ${orderItem.items.length - 1}개`}
           </div>
           <div>₩ {currencyFormat(orderItem.totalPrice)}</div>
