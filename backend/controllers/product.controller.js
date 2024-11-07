@@ -42,13 +42,13 @@ productController.getProducts = async (req, res) => {
       : { isDeleted: false };
     let query = Product.find(cond);
     let response = { status: "success" };
-    // if (page) {
-    //   query.skip((page - 1) * PAGE_SIZE).limit(PAGE_SIZE);
-    //   최종 몇개 페이지 = 총 데이터 갯수 / PAGE_SIZE
-    //   const totalItemNum = await Product.find(cond).countDocuments();
-    //   const totalPageNum = Math.ceil(totalItemNum / PAGE_SIZE);
-    //   response.totalPageNum = totalPageNum;
-    // }
+    if (page) {
+      // query.skip((page - 1) * PAGE_SIZE).limit(PAGE_SIZE);
+      // 최종 몇개 페이지 = 총 데이터 갯수 / PAGE_SIZE
+      const totalItemNum = await Product.find(cond).countDocuments();
+      const totalPageNum = Math.ceil(totalItemNum / PAGE_SIZE);
+      response.totalPageNum = totalPageNum;
+    }
 
     const productList = await query.exec();
     response.data = productList;
