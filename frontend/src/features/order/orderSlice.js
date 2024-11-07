@@ -49,12 +49,33 @@ export const getOrder = createAsyncThunk(
 
 export const getOrderList = createAsyncThunk(
   "order/getOrderList",
-  async (query, { rejectWithValue, dispatch }) => {}
+  async (query, { rejectWithValue, dispatch }) => {
+    try {
+      const response = await api.get("/order", { params: { ...query } });
+      if (response.status !== 200) {
+        throw new Error(response.error);
+      }
+      dispatch(
+        showToastMessage({ message: "오더 업데이트 완료!", states: "success" })
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.error);
+    }
+  }
 );
 
 export const updateOrder = createAsyncThunk(
   "order/updateOrder",
-  async ({ id, status }, { dispatch, rejectWithValue }) => {}
+  async ({ id, status }, { dispatch, rejectWithValue }) => {
+    try {
+      const response = await api.put(`/order/${id}`, { status });
+      if (response.status !== 200) {
+        throw new Error(response.error);
+      }
+      return response.data;
+    } catch (error) {}
+  }
 );
 
 // Order slice
