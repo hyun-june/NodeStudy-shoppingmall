@@ -32,7 +32,14 @@ const PaymentPage = () => {
   const { cartList, totalPrice } = useSelector((state) => state.cart);
 
   useEffect(() => {
-    // 오더번호를 받으면 어디로 갈까?
+    if (firstLoading) {
+      // useEffect가 처음에 호출될때 오더 성공페이지로 넘어가는걸 막기 위해
+      setFirstLoading(false);
+    } else {
+      if (orderNum !== "") {
+        navigate("/payment/success");
+      }
+    }
   }, [orderNum]);
 
   const handleSubmit = (event) => {
