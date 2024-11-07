@@ -23,7 +23,7 @@ const MyPage = () => {
   }
   return (
     <Container className="status-card-container">
-      {orderList.map((item) => (
+      {orderList?.map((item) => (
         <OrderStatusCard
           orderItem={item}
           className="status-card-container"
