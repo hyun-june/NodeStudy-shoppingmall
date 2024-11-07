@@ -62,7 +62,7 @@ orderController.getOrder = async (req, res) => {
         select: "image name",
       },
     });
-    const totalItemNum = await Order.find({ userId: userId }).count();
+    const totalItemNum = await Order.countDocuments({ userId: userId });
 
     const totalPageNum = Math.ceil(totalItemNum / PAGE_SIZE);
     res.status(200).json({ status: "success", data: orderList, totalPageNum });
