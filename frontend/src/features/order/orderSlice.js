@@ -40,7 +40,7 @@ export const getOrder = createAsyncThunk(
       if (response.status !== 200) {
         throw new Error(response.error);
       }
-      return response.data.data;
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.error);
     }
