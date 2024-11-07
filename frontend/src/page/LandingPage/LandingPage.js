@@ -59,7 +59,7 @@ const LandingPage = () => {
               </div>
             )}
           </Row>
-          <ReactPaginate
+          {/* <ReactPaginate
             nextLabel="next >"
             onPageChange={handlePageClick}
             pageRangeDisplayed={5}
@@ -79,7 +79,7 @@ const LandingPage = () => {
             containerClassName="pagination"
             activeClassName="active"
             className="display-center list-style-none"
-          />
+          /> */}
         </>
       )}
     </Container>
