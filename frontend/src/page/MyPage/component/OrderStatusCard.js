@@ -9,14 +9,15 @@ const OrderStatusCard = ({ orderItem }) => {
   }
 
   const productName = orderItem.items[0]?.productId?.name || "상품 이름 없음"; // name이 없을 경우 기본값 설정
-  const productImage = orderItem.items[0]?.productId?.image;
-  const productAlt = productName;
+  const productImage =
+    orderItem.items[0]?.productId?.image ||
+    "https://lh5.googleusercontent.com/proxy/o7gdKPHDEwAZ3X5hnKIE2FdzhkjA8Z0H2eMcZEXbFNHBSyLzFq3lITp5pIVsNEykLNgIKHwGTc4g-n13N8l8PcP-DJDWMdYUBaTboKU8UjnKiQ7fabe1sAg";
 
   return (
     <div>
       <Row className="status-card">
         <Col xs={2}>
-          <img src={productImage} alt={productAlt} height={96} />
+          <img src={productImage} height={96} />
         </Col>
         <Col xs={8} className="order-info">
           <div>
