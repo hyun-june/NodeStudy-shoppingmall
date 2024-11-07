@@ -40,7 +40,7 @@ export const getOrder = createAsyncThunk(
       if (response.status !== 200) {
         throw new Error(response.error);
       }
-      return response.data;
+      return response.data.data;
     } catch (error) {
       return rejectWithValue(error.error);
     }
@@ -84,10 +84,11 @@ const orderSlice = createSlice({
         state.loading = true;
       })
       .addCase(getOrder.fulfilled, (state, action) => {
+        console.log("Action Payload:", action.payload);
         state.loading = false;
         state.error = "";
-        state.orderList = action.payload.orderList;
-        state.totalPageNum = action.payload.totalPageNum;
+        // state.orderList = action.payload.data.orderList;
+        // state.totalPageNum = action.payload.totalPageNum;
       })
       .addCase(getOrder.rejected, (state, action) => {
         state.loading = false;
