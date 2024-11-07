@@ -87,10 +87,11 @@ const orderSlice = createSlice({
         console.log("Action Payload:", action.payload);
         state.loading = false;
         state.error = "";
-        // state.orderList = action.payload.data.orderList;
-        // state.totalPageNum = action.payload.totalPageNum;
+        state.orderList = action.payload.data.data;
+        state.totalPageNum = action.payload.data.totalPageNum;
       })
       .addCase(getOrder.rejected, (state, action) => {
+        console.log("Get Order Rejected:", action.payload);
         state.loading = false;
         state.error = action.payload;
       });
