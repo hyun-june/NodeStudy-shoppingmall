@@ -25,16 +25,18 @@ const orderSchema = Schema(
 orderSchema.methods.toJSON = function () {
   const obj = this._doc;
   delete obj.__v;
-  delete obj.updateAt;
-  delete obj.createAt;
+  delete obj.updatedAt;
+  delete obj.createdAt;
   return obj;
 };
 
 orderSchema.post("save", async function () {
   // 카트를 비워주자
   const cart = await Cart.findOne({ userId: this.userId });
-  cart.items = [];
-  await cart.save();
+  if (cart) {
+    cart.items = [];
+    await cart.save();
+  }
 });
 
 const Order = mongoose.model("Order", orderSchema);

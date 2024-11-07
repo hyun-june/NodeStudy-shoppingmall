@@ -36,7 +36,7 @@ export const getOrder = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const response = await api.get("/order/me");
-
+      console.log("rrr", response);
       if (response.status !== 200) {
         throw new Error(response.error);
       }
