@@ -73,6 +73,7 @@ export const updateOrder = createAsyncThunk(
       if (response.status !== 200) {
         throw new Error(response.error);
       }
+      dispatch(getOrderList({ page: 1 }));
       return response.data;
     } catch (error) {}
   }

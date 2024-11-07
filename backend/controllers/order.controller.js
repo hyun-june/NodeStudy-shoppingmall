@@ -113,7 +113,6 @@ orderController.updateOrder = async (req, res) => {
       { new: true }
     );
     if (!order) throw new Error("Can't find order");
-    dispatch(getOrderList({ page: 1 }));
     res.status(200).json({ status: "success", data: order });
   } catch (error) {
     return res.status(400).json({ status: "fail", error: error.message });
