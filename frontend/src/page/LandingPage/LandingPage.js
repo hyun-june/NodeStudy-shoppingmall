@@ -28,7 +28,7 @@ const LandingPage = () => {
 
   useEffect(() => {
     dispatch(getProductList({ ...searchQuery }));
-  }, [searchQuery]);
+  }, [searchQuery, dispatch]);
 
   const handlePageClick = ({ selected }) => {
     //  쿼리에 페이지값 바꿔주기
