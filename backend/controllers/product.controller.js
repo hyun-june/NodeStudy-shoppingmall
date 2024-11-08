@@ -132,12 +132,6 @@ productController.checkStock = async (item) => {
       };
     }
 
-    // 재고가 충분하면, 재고 - qty 성공
-    const newStock = { ...product.stock };
-    newStock[item.size] -= item.qty; // 수정된 부분: size 대신 item.size 사용
-    product.stock = newStock;
-    await product.save();
-
     return { isVerify: true };
   } catch (error) {
     console.error("Error in checkStock:", error.message); // 에러 로그 추가
@@ -151,6 +145,7 @@ productController.checkStock = async (item) => {
 productController.checkItemListStock = async (itemList) => {
   try {
     const insufficientStockItems = [];
+    const sufficientItems = [];
     // 재고 확인 로직
     await Promise.all(
       itemList.map(async (item) => {
@@ -159,12 +154,24 @@ productController.checkItemListStock = async (itemList) => {
         console.log("Stock Check Result:", stockCheck);
         if (!stockCheck.isVerify) {
           insufficientStockItems.push({ item, message: stockCheck.message });
+        } else {
+          sufficientItems.push(item);
         }
-        return stockCheck;
       })
     );
 
-    return insufficientStockItems;
+    if (insufficientStockItems.length > 0) {
+      return insufficientStockItems;
+    }
+
+    await Promise.all(
+      sufficientItems.map(async (item) => {
+        const product = await Product.findById(item.productId);
+        product.stock[item.size] -= item.qty;
+        await product.save();
+      })
+    );
+    return { isVerify: true };
   } catch (error) {
     console.error("Error in checkItemListStock:", error.message);
     return { status: "fail", error: error.message };
