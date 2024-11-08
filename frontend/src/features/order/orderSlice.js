@@ -19,6 +19,7 @@ export const createOrder = createAsyncThunk(
   async (payload, { dispatch, rejectWithValue }) => {
     try {
       const response = await api.post("/order", payload);
+      if (response.status !== 200) throw new Error(response.error);
       dispatch(getCartQty());
       return response.data.orderNum;
     } catch (error) {
@@ -35,6 +36,10 @@ export const getOrder = createAsyncThunk(
   async (_, { rejectWithValue, dispatch }) => {
     try {
       const response = await api.get("/order/me");
+      console.log("rrr", response);
+      if (response.status !== 200) {
+        throw new Error(response.error);
+      }
       return response.data;
     } catch (error) {
       return rejectWithValue(error.error);
@@ -47,6 +52,9 @@ export const getOrderList = createAsyncThunk(
   async (query, { rejectWithValue, dispatch }) => {
     try {
       const response = await api.get("/order", { params: { ...query } });
+      if (response.status !== 200) {
+        throw new Error(response.error);
+      }
       dispatch(
         showToastMessage({ message: "오더 업데이트 완료!", status: "success" })
       );
@@ -62,6 +70,9 @@ export const updateOrder = createAsyncThunk(
   async ({ id, status }, { dispatch, rejectWithValue }) => {
     try {
       const response = await api.put(`/order/${id}`, { status });
+      if (response.status !== 200) {
+        throw new Error(response.error);
+      }
       dispatch(getOrderList({ page: 1 }));
       return response.data;
     } catch (error) {}
@@ -95,12 +106,14 @@ const orderSlice = createSlice({
         state.loading = true;
       })
       .addCase(getOrder.fulfilled, (state, action) => {
+        console.log("Action Payload:", action.payload);
         state.loading = false;
         state.error = "";
         state.orderList = action.payload.data;
         state.totalPageNum = action.payload.totalPageNum;
       })
       .addCase(getOrder.rejected, (state, action) => {
+        console.log("Get Order Rejected:", action.payload);
         state.loading = false;
         state.error = action.payload;
       })
