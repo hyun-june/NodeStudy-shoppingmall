@@ -3,7 +3,7 @@ import { Row, Col, Badge } from "react-bootstrap";
 import { badgeBg } from "../../../constants/order.constants";
 import { currencyFormat } from "../../../utils/number";
 
-const OrderStatusCard = ({ orderItem }) => {
+const OrderStatusCard = ({ orderItem, onClick }) => {
   if (!orderItem || !orderItem.items || orderItem.items.length === 0) {
     return <div>주문 정보가 없습니다.</div>;
   }
@@ -14,7 +14,7 @@ const OrderStatusCard = ({ orderItem }) => {
     "https://lh5.googleusercontent.com/proxy/o7gdKPHDEwAZ3X5hnKIE2FdzhkjA8Z0H2eMcZEXbFNHBSyLzFq3lITp5pIVsNEykLNgIKHwGTc4g-n13N8l8PcP-DJDWMdYUBaTboKU8UjnKiQ7fabe1sAg";
 
   return (
-    <div>
+    <div onClick={onClick}>
       <Row className="status-card">
         <Col xs={2}>
           <img src={productImage} height={96} />

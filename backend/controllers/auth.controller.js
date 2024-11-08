@@ -35,7 +35,6 @@ authController.loginWithGoogle = async (req, res) => {
       audience: GOOGLE_CLIENT_ID,
     });
     const { email, name } = ticket.getPayload();
-    console.log("google test:", email, name);
 
     let user = await User.findOne({ email });
     if (!user) {
@@ -70,7 +69,6 @@ authController.authenticate = async (req, res, next) => {
     }
     const token = tokenString.replace("Bearer ", "");
     jwt.verify(token, JWT_SECRET_KEY, (error, payload) => {
-      console.log("test");
       if (error) {
         throw new Error("로그인을 해주세요.");
       }
