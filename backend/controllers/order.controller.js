@@ -10,7 +10,7 @@ orderController.createOrder = async (req, res) => {
     //프론트엔드에서 데이터 보낸거 받아와 userId,totalPrice,shipTo,contact,orderList
     const { userId } = req;
     const { totalPrice, shipTo, contact, orderList } = req.body;
-
+    console.log("Received data:", req.body);
     if (!orderList || !Array.isArray(orderList)) {
       return res
         .status(400)
@@ -22,6 +22,7 @@ orderController.createOrder = async (req, res) => {
     );
     console.log("test", insufficientStockItems);
     if (!insufficientStockItems || !Array.isArray(insufficientStockItems)) {
+      console.log("insufficientStockItems:", insufficientStockItems);
       throw new Error("재고 확인 중 오류가 발생했습니다.");
     }
 
@@ -31,6 +32,7 @@ orderController.createOrder = async (req, res) => {
         (total, item) => (total += item.message),
         ""
       );
+      console.log("Error message:", errorMessage);
       throw new Error(errorMessage);
     }
     //order를 만들자!
