@@ -4,6 +4,8 @@ const bcrypt = require("bcryptjs");
 const User = require("../Model/User");
 require("dotenv").config();
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+const { OAuth2Client } = require("google-auth-library");
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 authController.loginWithEmail = async (req, res) => {
   try {
@@ -22,6 +24,23 @@ authController.loginWithEmail = async (req, res) => {
   } catch (error) {
     res.status(400).json({ status: "fail", error: error.message });
   }
+};
+
+authController.loginWithGoogle = async (req, res) => {
+  try {
+    const { token } = req.body;
+    const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
+    const ticket = await googleClient.verifyIdToken({
+      idToken: token,
+      audience: GOOGLE_CLIENT_ID,
+    });
+    const { email, name } = ticket.getPayload();
+    console.log("google test:", email, name);
+    // 4. 백엔드에서 로그인하기
+    // a. 토큰 값을 읽어와서 => 유저정보를 뽑아내고 email
+    // b. 이미 로그인을 한적이 있는 유저 => 로그인시키고 토큰 값 주기
+    // c. 처음 로그인 시도를 한 유저 => 유저 정보 새로 생성 => 토큰 값 주기
+  } catch (error) {}
 };
 
 authController.authenticate = async (req, res, next) => {

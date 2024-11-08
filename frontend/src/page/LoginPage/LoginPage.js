@@ -31,6 +31,7 @@ const Login = () => {
   const handleGoogleLogin = async (googleData) => {
     //구글 로그인 하기
     console.log("google Data:", googleData);
+    dispatch(loginWithGoogle(googleData.credential));
   };
 
   if (user) {
@@ -88,8 +89,9 @@ const Login = () => {
                   2. Oauth로그인을 위해서 google api 사이트에 가입하고 클라이언트 키, 시크릿 키 받아오기
                   3. 로그인
                   4. 백엔드에서 로그인하기
-                    a. 이미 로그인을 한적이 있는 유저 => 로그인시키고 토큰 값 주기
-                    b. 처음 로그인 시도를 한 유저 => 유저 정보 새로 생성 => 토큰 값 주기
+                    a. 토큰 값을 읽어와서 => 유저정보를 뽑아내고 email
+                    b. 이미 로그인을 한적이 있는 유저 => 로그인시키고 토큰 값 주기
+                    c. 처음 로그인 시도를 한 유저 => 유저 정보 새로 생성 => 토큰 값 주기
               */}
             </div>
           </div>
