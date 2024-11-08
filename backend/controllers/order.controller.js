@@ -20,9 +20,7 @@ orderController.createOrder = async (req, res) => {
     const insufficientStockItems = await productController.checkItemListStock(
       orderList
     );
-    console.log("test", insufficientStockItems);
     if (!insufficientStockItems || !Array.isArray(insufficientStockItems)) {
-      console.log("insufficientStockItems:", insufficientStockItems);
       throw new Error("재고 확인 중 오류가 발생했습니다.");
     }
 
@@ -32,7 +30,6 @@ orderController.createOrder = async (req, res) => {
         (total, item) => (total += item.message),
         ""
       );
-      console.log("Error message:", errorMessage);
       throw new Error(errorMessage);
     }
     //order를 만들자!
@@ -47,7 +44,6 @@ orderController.createOrder = async (req, res) => {
     await newOrder.save();
     res.status(200).json({ status: "success", orderNum: newOrder.orderNum });
   } catch (error) {
-    console.error("Error in createOrder:", error.message);
     return res.status(400).json({ status: "fail", error: error.message });
   }
 };

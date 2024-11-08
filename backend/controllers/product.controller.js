@@ -134,7 +134,6 @@ productController.checkStock = async (item) => {
 
     return { isVerify: true };
   } catch (error) {
-    console.error("Error in checkStock:", error.message); // 에러 로그 추가
     return {
       isVerify: false,
       message: "재고 확인 중 오류가 발생했습니다.",
@@ -149,9 +148,7 @@ productController.checkItemListStock = async (itemList) => {
     // 재고 확인 로직
     await Promise.all(
       itemList.map(async (item) => {
-        console.log("Processing item:", item);
         const stockCheck = await productController.checkStock(item);
-        console.log("Stock Check Result:", stockCheck);
         if (!stockCheck.isVerify) {
           insufficientStockItems.push({ item, message: stockCheck.message });
         } else {
@@ -173,7 +170,6 @@ productController.checkItemListStock = async (itemList) => {
     );
     return [];
   } catch (error) {
-    console.error("Error in checkItemListStock:", error.message);
     return { status: "fail", error: error.message };
   }
 };
